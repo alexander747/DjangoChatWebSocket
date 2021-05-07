@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
+import os           #IMPORTACION DE OS
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -31,6 +32,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'corsheaders', #PARA LOS CORS DEBE ESTAR DE PRIMERO
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -40,9 +42,13 @@ INSTALLED_APPS = [
     'msgs.apps.MsgsConfig',
     'room.apps.RoomConfig',
     'users.apps.UsersConfig',
+    'rest_framework',           #PARA PODER USAR REST FRAMEWORK
+    'rest_framework.authtoken' #PARA PODER GENERAR TOKENS
+
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware', #PARA LOS CORS
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -115,13 +121,13 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-#CAMPO QUE SE AGREGA PARA QUE USE EL MODELO PERSONALIZADO DE USUARIO
+#CAMPO QUE SE AGREGA PARA QUE USE EL MODELO PERSONALIZADO DE USUARIO QUE SE ENCUENTRA EN LA CARPETA users Modelo User
 AUTH_USER_MODEL = 'users.User'
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'es-co'
 
 TIME_ZONE = 'UTC'
 
@@ -130,6 +136,19 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
+
+#PARA LOS CORS SE AGREGO
+CORS_ALLOWED_ORIGINS = [
+    # "https://example.com",
+    # "https://sub.example.com",
+    "http://localhost:4200"
+]
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:4200",
+    "https://localhost:42000"
+
+]
+#FIN PARA LOS CORS SE AGREGO
 
 
 # Static files (CSS, JavaScript, Images)
@@ -141,3 +160,5 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+TOKEN_EXPIRED_AFTER_SECONDS = 28800 # 8 HORAS PARA LA EXPIRACION DEL TOKEN CREADO 

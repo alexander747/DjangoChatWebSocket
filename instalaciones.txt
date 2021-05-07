@@ -1,0 +1,2 @@
+python3 -m pip install django-cors-headers
+psycopg2-binary==2.8.6
