@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-90&ed=v@o_jhz0)jgt3t5ml^t1^ibq^l@uocd4#z(if=p7*6re
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'room.apps.RoomConfig',
     'users.apps.UsersConfig',
     'rest_framework',           #PARA PODER USAR REST FRAMEWORK
-    'rest_framework.authtoken' #PARA PODER GENERAR TOKENS
+    'rest_framework.authtoken', #PARA PODER GENERAR TOKENS
+    'channels', #PARA CHAT SOCKETS
 
 ]
 
@@ -93,7 +94,7 @@ WSGI_APPLICATION = 'djangochat.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'chat1',
+        'NAME': 'chat',
         'USER':'postgres',
         'PASSWORD':'root',
         'HOST':'localhost',
@@ -162,3 +163,15 @@ STATIC_URL = '/static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 TOKEN_EXPIRED_AFTER_SECONDS = 28800 # 8 HORAS PARA LA EXPIRACION DEL TOKEN CREADO 
+
+#CHAT 
+CHANNEL_LAYERS = {
+    'default' : {
+        'BACKEND' : 'asgiref.inmemory.ChannelLayer',
+        'ROUTING' : 'msgs.routing.channel_routing',
+    }
+}
+
+
+
+CORS_ORIGIN_ALLOW_ALL = True
